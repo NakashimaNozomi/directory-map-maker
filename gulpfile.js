@@ -10,6 +10,7 @@ const notify = require('gulp-notify');
 const htmlbeautify = require('gulp-html-beautify');
 const webpackStream = require("webpack-stream");
 const webpack = require("webpack");
+const ghPages = require('gulp-gh-pages');
 
 const config = require('./config');
 const configSass = config.sass;
@@ -26,7 +27,7 @@ gulp.task('browser-sync', (done) => {
   browserSync.init({
     //ローカル開発
     server: {
-    baseDir: "./develop/",
+    baseDir: "./"+process.env.DEVELOP_DIR+"/",
     },
     files: ['./**/*.html', './img/**/*'],
   });
@@ -190,3 +191,11 @@ gulp.task("product",
     gulp.parallel('sass','html','jsx', 'static')
   )
 );
+
+gulp.task('ghpages', (done) => {
+  gulp.src('./'+process.env.PRODUCT_DIR+'/**/*')
+    .pipe(ghPages());
+  done();
+});
+
+gulp.task('deploy', gulp.series('product', 'ghpages'));

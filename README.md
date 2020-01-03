@@ -15,3 +15,4 @@
 ### 本番用
 `.env`の`PRODUCT_DIR`に出力される
 - ファイルの出力 `npx gulp product`
+- github pagesへデプロイ `npx gulp deploy`
