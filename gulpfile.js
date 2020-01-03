@@ -173,6 +173,8 @@ gulp.task('watch', (done) => {
 
 gulp.task('default', gulp.series(gulp.parallel('sass','html','jsx', 'static'),'browser-sync','watch') );
 
+//開発用の出力
+gulp.task("dev", gulp.parallel('sass','html','jsx', 'static'));
 
 //以下はデプロイ用タスク
 gulp.task("product",
