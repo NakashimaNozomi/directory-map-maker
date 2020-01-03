@@ -1,0 +1,53 @@
+{
+  "name": "canvas_study",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.5",
+    "babel-preset-react": "^6.24.1",
+    "browser-sync": "^2.26.7",
+    "dotenv": "^8.2.0",
+    "fibers": "^4.0.2",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-webpack": "^1.5.0",
+    "jquery": "^3.4.1",
+    "lodash": "^4.17.15",
+    "material-design-icons-iconfont": "^5.0.1",
+    "materialize-css": "^1.0.0",
+    "react": "~16.10.0",
+    "react-dom": "~16.10.0",
+    "react-scripts": "^3.3.0",
+    "sass": "^1.24.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-stream": "^5.2.1"
+  },
+  "dependencies": {},
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "browserslist": [
+    ">0.2% in JP",
+    "not ie <= 10",
+    "not op_mini all"
+  ]
+}
