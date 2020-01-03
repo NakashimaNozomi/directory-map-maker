@@ -72,7 +72,10 @@ gulp.task('html', (done) => {
 });
 
 gulp.task("jsx", (done) => {
-  webpackStream({
+  plumber({
+    errorHandler: notify.onError('<%= error.message %>')
+  })
+  .pipe(webpackStream({
     mode: environment,
     entry: [
       './src/js/index.jsx',
@@ -108,13 +111,7 @@ gulp.task("jsx", (done) => {
         },
       }],
     },
-  }, webpack)
-  .pipe(plumber({
-    errorHandler: () => {
-      this.emit('end');
-      notify.onError('<%= error.message %>');
-    }
-  }))
+  }, webpack))
   .pipe(gulp.dest(configJsx[destination]))
   .pipe(browserSync.reload({
     stream: true
