@@ -5,10 +5,26 @@ export default class FileList extends Component {
   constructor(props) {
     super(props);
   }
+  //トップディレクトリにファイルを追加するボタンのlist
+  makeTopFileAddBtnDom = (idx, parents) => {
+    return (
+      <li>
+        <div className="row">
+          <button
+            className="btn waves-effect waves-light red col s2 indigo"
+            tabIndex="-1"
+            onClick={e => this.props.onAddBtnClickHandler(idx, parents)}
+          >
+            <i className="material-icons">add</i>
+          </button>
+        </div>
+      </li>
+    );
+  };
+
   render() {
     let parents = this.props.parents || [];
     let _files = this.props.files;
-
     let lists = [];
     _files.map((_f, idx) => {
       lists.push(
@@ -32,6 +48,7 @@ export default class FileList extends Component {
         }
       >
         {lists}
+        {parents.length > 0 ? "" : this.makeTopFileAddBtnDom(-1, [])}
       </ul>
     );
   }

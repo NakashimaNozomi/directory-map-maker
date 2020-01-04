@@ -6,10 +6,8 @@ export default class FileItem extends Component {
     super(props);
   }
 
-  render() {
-    let parents = this.props.parents || [];
-    let _f = this.props.file;
-    let idx = this.props.idx;
+  //通常のファイルlist
+  makeNormalListDom = (_f, idx, parents) => {
     let strParentIdx = _f.parentIdxs.length > 0 ? _f.parentIdxs.join("-") : "";
     let fileName = "file" + strParentIdx + "-" + idx;
     let commentName = "comment" + strParentIdx + "-" + idx;
@@ -111,5 +109,13 @@ export default class FileItem extends Component {
         {childrenFileList}
       </li>
     );
+  };
+
+  render() {
+    let _f = this.props.file;
+    let idx = this.props.idx;
+    let parents = this.props.parents || [];
+
+    return this.makeNormalListDom(_f, idx, parents);
   }
 }
