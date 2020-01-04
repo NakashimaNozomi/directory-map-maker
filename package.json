@@ -1,12 +1,16 @@
 {
-  "name": "canvas_study",
+  "name": "directory-map-maker-site",
   "version": "1.0.0",
-  "description": "",
+  "description": "website of directory structure maker. Made for React.js practise",
   "private": true,
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Nozomi Nakamura <itijiku.cathy@gmail.com> (https://github.com/nakashimanozomi/)",
+  "license": "MIT",
   "homepage": "https://nakashimanozomi.github.io/directory-map-maker",
+  "bugs": {
+    "url": "https://github.com/NakashimaNozomi/directory-map-maker/issues",
+    "email": "itijiku.cathy@gmail.com"
+  },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",

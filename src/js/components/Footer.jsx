@@ -45,21 +45,27 @@ export default function Footer(props) {
                 </a>
               </li>
             </ul>
+            <a
+              href="https://www.amazon.jp/hz/wishlist/ls/3RESKZEXLJ5RH?ref_=wl_share"
+              target="_blank"
+              className="waves-effect waves-light btn-small"
+            >
+              <i className="material-icons right">favorite</i>マイほしい物リスト
+            </a>
           </div>
         </div>
       </div>
       <div className="footer-copyright">
         <div className="container">
-          © 2020{" "}
+          © 2020 　
           <a href="https://github.com/NakashimaNozomi/" target="_blank">
             Nozomi Nakamura
           </a>
           <a
-            href="https://www.amazon.jp/hz/wishlist/ls/3RESKZEXLJ5RH?ref_=wl_share"
-            target="_blank"
-            className="right waves-effect waves-light btn-small"
+            className="blue-text text-darken-1 right"
+            href="https://nakashimanozomi.github.io/directory-map-maker/blob/master/LICENSE"
           >
-            <i className="material-icons right">favorite</i>マイほしい物リスト
+            MIT License
           </a>
         </div>
       </div>
