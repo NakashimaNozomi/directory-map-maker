@@ -13,6 +13,7 @@ export default class Main extends Component {
 
     $(() => {
       $(".tooltipped").tooltip();
+      $(".tabs").tabs();
     });
   }
 
@@ -20,6 +21,9 @@ export default class Main extends Component {
     this.setState({
       isOutputShow: !this.state.isOutputShow
     });
+    setTimeout(() => {
+      $(".tabs").tabs("updateTabIndicator");
+    }, 10);
   };
 
   render() {

@@ -4,10 +4,6 @@ import HowtoBtn from "../howto/Btn";
 export default class Input extends Component {
   constructor(props) {
     super(props);
-
-    $(() => {
-      $(".tabs").tabs();
-    });
   }
 
   render() {
