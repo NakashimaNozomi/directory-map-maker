@@ -13,7 +13,7 @@ export default class Output extends Component {
           this.props.isShow ? "col l4 s12" : "hide"
         ].join(" ")}
       >
-        <h2>Output</h2>
+        <h2 className="red-text text-lighten-1">Output</h2>
         <div className="card">
           <div className="card-action right-align border-bottom">
             <button className="waves-effect waves-light btn indigo">
