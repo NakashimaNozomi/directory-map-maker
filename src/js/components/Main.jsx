@@ -3,23 +3,44 @@ import React, { Component } from "react";
 import Input from "./dirStructure/Input.jsx";
 import Output from "./dirStructure/Output.jsx";
 
-export default class Footer extends Component {
+export default class Main extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isOutputShow: true
+    };
+
+    $(() => {
+      $(".tooltipped").tooltip();
+    });
   }
+
+  toggleOutputDisp = () => {
+    this.setState({
+      isOutputShow: !this.state.isOutputShow
+    });
+  };
 
   render() {
     return (
       <main className="main-content">
-        {/* <h1 className="center-align z-depth-1">構成図を作りましょう</h1> */}
         <div className="row main-content-row">
-          <Input />
-          <Output />
+          <Input isOutputShow={this.state.isOutputShow} />
+          <Output isShow={this.state.isOutputShow} />
         </div>
-        {/* TODO: Outputをtoggle可能にしたい */}
-        {/* <a className="btn-floating btn-large waves-effect waves-light teal result-toggle-btn">
-          <i className="material-icons">remove_red_eye</i>
-        </a> */}
+        <a
+          className="btn-floating btn-large waves-effect waves-light teal output-toggle-btn tooltipped"
+          data-position="top"
+          data-tooltip={this.state.isOutputShow ? "出力を非表示" : "出力を表示"}
+          onClick={this.toggleOutputDisp}
+        >
+          <i
+            className={
+              this.state.isOutputShow ? "fas fa-eye-slash" : "fas fa-eye"
+            }
+          ></i>
+        </a>
       </main>
     );
   }

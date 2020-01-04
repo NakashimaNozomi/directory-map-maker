@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import HowtoBtn from "../howto/Btn";
 
 export default class Input extends Component {
   constructor(props) {
@@ -11,10 +12,16 @@ export default class Input extends Component {
 
   render() {
     return (
-      <div className="input-content col l8 s12 z-depth-2 white">
+      <div
+        className={[
+          "input-content col s12 z-depth-2 white",
+          this.props.isOutputShow ? "l8" : "l12"
+        ].join(" ")}
+      >
         <div className="row valign-wrapper">
           <h2 className="valign">Input</h2>
         </div>
+        <HowtoBtn />
         <div className="row">
           <div className="col s12">
             <ul className="tabs">
@@ -27,12 +34,6 @@ export default class Input extends Component {
             </ul>
           </div>
           <div id="writeArea" className="col s12 input-content-writeArea">
-            <div className="card-panel">
-              <p>
-                ファイル名は末尾にスラッシュ <span className="code">/</span>{" "}
-                をつけるとディレクトリとみなされます。
-              </p>
-            </div>
             <ul className="form-div-collection">
               {/* file */}
               <li>
@@ -51,7 +52,7 @@ export default class Input extends Component {
                     <div className="row">
                       <button
                         className="btn-flat col s12 red-text"
-                        tabindex="-1"
+                        tabIndex="-1"
                       >
                         <i className="material-icons">delete</i>
                       </button>
@@ -78,13 +79,13 @@ export default class Input extends Component {
                     <div className="row">
                       <button
                         className="btn-flat col s12 red-text"
-                        tabindex="-1"
+                        tabIndex="-1"
                       >
                         <i className="material-icons">delete</i>
                       </button>
                       <button
-                        className="btn-flat col s12 teal-text"
-                        tabindex="-1"
+                        className="btn-flat col s12 indigo-text"
+                        tabIndex="-1"
                       >
                         <i className="material-icons">add_circle</i>
                       </button>
@@ -110,13 +111,13 @@ export default class Input extends Component {
                     <div className="row">
                       <button
                         className="btn-flat col s12 red-text"
-                        tabindex="-1"
+                        tabIndex="-1"
                       >
                         <i className="material-icons">delete</i>
                       </button>
                       <button
-                        className="btn-flat col s12 teal-text"
-                        tabindex="-1"
+                        className="btn-flat col s12 indigo-text"
+                        tabIndex="-1"
                       >
                         <i className="material-icons">add_circle</i>
                       </button>
@@ -142,7 +143,7 @@ export default class Input extends Component {
                         <div className="row">
                           <button
                             className="btn-flat col s12 red-text"
-                            tabindex="-1"
+                            tabIndex="-1"
                           >
                             <i className="material-icons">delete</i>
                           </button>
@@ -167,13 +168,13 @@ export default class Input extends Component {
                         <div className="row">
                           <button
                             className="btn-flat col s12 red-text"
-                            tabindex="-1"
+                            tabIndex="-1"
                           >
                             <i className="material-icons">delete</i>
                           </button>
                           <button
-                            className="btn-flat col s12 teal-text"
-                            tabindex="-1"
+                            className="btn-flat col s12 indigo-text"
+                            tabIndex="-1"
                           >
                             <i className="material-icons">add_circle</i>
                           </button>
@@ -199,7 +200,7 @@ export default class Input extends Component {
                             <div className="row">
                               <button
                                 className="btn-flat col s12 red-text"
-                                tabindex="-1"
+                                tabIndex="-1"
                               >
                                 <i className="material-icons">delete</i>
                               </button>
@@ -216,7 +217,7 @@ export default class Input extends Component {
               {/* normal add file */}
               <li>
                 <div className="row">
-                  <button className="btn waves-effect waves-light red col s2">
+                  <button className="btn waves-effect waves-light red col s2 indigo">
                     <i className="material-icons">add</i>
                   </button>
                 </div>

@@ -34,6 +34,21 @@ footer {
   position: relative; //flexitem内ではこれがないとzindexがきかない
   z-index: 2;
 
+  .howto {
+    &-content {
+      z-index: 11;
+      // position: relative
+    }
+
+    &-closeBtn {
+      // position: absolute;
+      // top: .5rem;
+      // right: .5rem;
+      z-index: 100;
+      margin: 0;
+    }
+  }
+
   &.col {
     padding-left: 2rem;
   }
@@ -66,7 +81,7 @@ footer {
 }
 
 
-.result {
+.output {
   &-content {
     position: relative; //flexitem内ではこれがないとzindexがきかない
     z-index: 1;
