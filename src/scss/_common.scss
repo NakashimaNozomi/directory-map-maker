@@ -1,0 +1,35 @@
+.border {
+    &-top {
+        border-top: solid 1px $border-light-dark;
+    }
+
+    &-right {
+        border-right: solid 1px $border-light-dark;
+    }
+
+    &-bottom {
+        border-bottom: solid 1px $border-light-dark;
+    }
+
+    &-left {
+        border-left: solid 1px $border-light-dark;
+    }
+
+    &-bold {
+        border-width: 3px;
+
+        &-super {
+            border-width: 6px;
+        }
+    }
+
+}
+
+
+.flex {
+    display: flex;
+
+    &-column {
+        flex-direction: column;
+    }
+}

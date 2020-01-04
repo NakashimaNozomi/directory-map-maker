@@ -25,8 +25,8 @@ module.exports = {
     src: [
       "./src/img/**/*.?(png|jpg|gif|svg|ico|PNG)", '!' + "./src/img/**/_*.?(png|jpg|gif|svg|ico|PNG)"
     ],
-    dest: './'+process.env.DEVELOP_DIR+'/',
-    product: './'+process.env.PRODUCT_DIR+'/',
+    dest: './'+process.env.DEVELOP_DIR+'/img/',
+    product: './'+process.env.PRODUCT_DIR+'/img/',
     watch: './src/img/**/*.?(png|jpg|gif|svg|ico|PNG|JPG)'
   },
 };

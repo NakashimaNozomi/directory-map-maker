@@ -155,6 +155,17 @@ gulp.task('icon', (done) => {
       '!./node_modules/material-design-icons-iconfont/dist/*.map'
     ])
     .pipe(gulp.dest(configSass[destination]+'/material-icons/'));
+
+    //fontawasome
+    gulp.src([
+      './node_modules/@fortawesome/fontawesome-free/css/all.min.css',
+    ])
+    .pipe(gulp.dest(configSass[destination]+'/fontawesome/css/'));
+    gulp.src([
+      './node_modules/@fortawesome/fontawesome-free/webfonts/*',
+    ])
+    .pipe(gulp.dest(configSass[destination]+'/fontawesome/webfonts/'));
+
   done();
 });
 
