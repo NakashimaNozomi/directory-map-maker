@@ -1,0 +1,96 @@
+//page
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+nav {
+  position: relative; //flexitem内ではこれがないとzindexがきかない
+  z-index: 5;
+
+  h1 {
+    margin: 0.67em 0;
+  }
+}
+
+main {
+  .main {
+    &-content {
+      &-row {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+footer {
+  margin-top: auto;
+  position: relative; //flexitem内ではこれがないとzindexがきかない
+  z-index: 5;
+}
+
+.input-content {
+  position: relative; //flexitem内ではこれがないとzindexがきかない
+  z-index: 2;
+
+  .howto {
+    &-content {
+      z-index: 11;
+      // position: relative
+    }
+
+    &-closeBtn {
+      // position: absolute;
+      // top: .5rem;
+      // right: .5rem;
+      z-index: 100;
+      margin: 0;
+    }
+  }
+
+  &.col {
+    padding-left: 2rem;
+  }
+
+  &-writeArea {
+    overflow-x: auto;
+
+    ul {
+      &.form-div-collection {
+        .row {
+          margin-bottom: 0;
+        }
+
+        li {
+          margin-bottom: .5rem;
+
+          .input-field {
+            margin-bottom: 0;
+          }
+
+          ul {
+            margin-top: -1rem;
+            padding-left: 4rem;
+            margin-right: -4rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.output {
+  &-content {
+    position: relative; //flexitem内ではこれがないとzindexがきかない
+    z-index: 1;
+  }
+
+  &-toggle-btn {
+    position: fixed;
+    z-index: 10;
+    bottom: 3rem;
+    right: 3rem;
+  }
+}
