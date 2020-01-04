@@ -5,6 +5,10 @@ export default class Output extends Component {
     super(props);
   }
 
+  onCopyClickHandler = () => {
+    M.toast({ html: "コピーしました", classes: "rounded" });
+  };
+
   render() {
     return (
       <div
@@ -16,8 +20,12 @@ export default class Output extends Component {
         <h2 className="red-text text-lighten-1">Output</h2>
         <div className="card">
           <div className="card-action right-align border-bottom">
-            <button className="waves-effect waves-light btn indigo">
-              <i className="far fa-clipboard left"></i>結果をコピー
+            <button
+              className="waves-effect waves-light btn indigo"
+              onClick={this.onCopyClickHandler}
+            >
+              <i className="far fa-clipboard left"></i>
+              結果をコピー
             </button>
           </div>
           <div className="card-content">
