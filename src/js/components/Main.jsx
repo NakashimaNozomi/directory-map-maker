@@ -19,67 +19,8 @@ export default class Main extends Component {
       isOutputShow: true,
       files: [
         {
-          name: "ファイルだよ",
+          name: "",
           comment: "",
-          isDir: false,
-          parentIdxs: [],
-          children: []
-        },
-        {
-          name: "ディレクトリだよ",
-          comment: "",
-          isDir: true,
-          parentIdxs: [],
-          children: [
-            {
-              name: "ファイルコメントあり",
-              comment: "あああああああああああ",
-              isDir: false,
-              parentIdxs: [1],
-              children: []
-            },
-            {
-              name: "ディレクトリコメントあり",
-              comment: "ここにコメント",
-              isDir: true,
-              parentIdxs: [1],
-              children: [
-                {
-                  name: "AAAAA",
-                  comment: "",
-                  isDir: false,
-                  parentIdxs: [1, 1],
-                  children: []
-                },
-                {
-                  name: "BBBBBB",
-                  comment: "",
-                  isDir: true,
-                  parentIdxs: [1, 1],
-                  children: [
-                    {
-                      name: "猫猫",
-                      comment: "",
-                      isDir: false,
-                      parentIdxs: [1, 1, 1],
-                      children: []
-                    },
-                    {
-                      name: "犬犬犬",
-                      comment: "",
-                      isDir: false,
-                      parentIdxs: [1, 1, 1],
-                      children: []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: "ほげほげ",
-          comment: "ホゲコメントほげほげぇえ",
           isDir: false,
           parentIdxs: [],
           children: []
@@ -93,6 +34,9 @@ export default class Main extends Component {
     });
   }
 
+  /**
+   * 出力エリアの表示非表示を切り替える
+   */
   toggleOutputDisp = () => {
     this.setState({
       isOutputShow: !this.state.isOutputShow
@@ -102,16 +46,100 @@ export default class Main extends Component {
     }, 10);
   };
 
+  /**
+   * テキストに何か変更があった時のハンドラ
+   *
+   * @param string key 変更する対象
+   * @param Object value 値
+   * @param integer idx 変更する対象のidx
+   * @param array parentIdxs 親要素のidxの配列
+   */
   onTextChangeHandler = (key, value, idx, parentIdxs) => {
-    console.log(key, value, idx, parentIdxs);
+    // 対象の階層まで潜る
+    let target = this._getTargetFileObj(idx, parentIdxs);
+    // 潜り終えた際に値を書き換える
+    this._updateFileObjVal(target, key, value);
+    this.setState({
+      files: this.state.files
+    });
   };
 
+  /**
+   * ファイル追加があった時のハンドラ
+   *
+   * @param integer idx
+   * @param array parentIdxs 親要素のidxの配列
+   */
   onAddBtnClickHandler = (idx, parentIdxs) => {
-    console.log(idx, parentIdxs);
+    let target = this._getTargetFileObj(idx, parentIdxs);
+    let _parentIdxs = [];
+    if (idx != -1 || parentIdxs.length > 0) {
+      //トップの階層じゃない場合はchildrenに新しいファイルObjを挿入
+      target = target["children"];
+      _parentIdxs.push(idx);
+    }
+    let tmp = Object.assign({}, this.defaultFile);
+    target.push(Object.assign({}, { ...tmp, ...{ parentIdxs: _parentIdxs } }));
+    this.setState({
+      files: this.state.files
+    });
   };
 
-  onDelBtnClickHandler = (idx, parentIdxs) => {
-    console.log(idx, parentIdxs);
+  /**
+   * ファイル削除があった時のハンドラ
+   *
+   * @param integer idx
+   * @param array parentIdxs 親要素のidxの配列
+   */
+  onDelBtnClickHandler = (idx, parentIdxs) => {};
+
+  /**
+   * filesObjectの対象の要素まで潜る
+   *
+   * @param integer idx
+   * @param array parentIdxs 親要素のidxの配列
+   */
+  _getTargetFileObj = (idx, parentIdxs) => {
+    let _f = this.state.files;
+    let target = _f;
+
+    for (let i = 0; i < parentIdxs.length; ++i) {
+      let k = parentIdxs[i];
+      if (i != 0) {
+        target = target["children"][k];
+      } else {
+        target = target[k];
+      }
+    }
+
+    if (idx != -1) {
+      if (parentIdxs.length > 0) {
+        target = target["children"][idx];
+      } else {
+        target = target[idx];
+      }
+    }
+    return target;
+  };
+
+  /**
+   * fileObjの値をアップデートする。
+   * keyがnameの場合はisDirも合わせて更新する
+   *
+   * @param Object target
+   * @param string key
+   * @param Object value
+   */
+  _updateFileObjVal = (target, key, value) => {
+    target[key] = name;
+    //keyが[ファイル名]でスラッシュを含む場合はisDirをtrueに
+    if (key == "name") {
+      if (value.match(/(\/|／)$/)) {
+        target["isDir"] = true;
+      } else {
+        target["isDir"] = false;
+      }
+    }
   };
 
   render() {

@@ -8,14 +8,15 @@ export default class FileItem extends Component {
 
   //通常のファイルlist
   makeNormalListDom = (_f, idx, parents) => {
-    let strParentIdx = _f.parentIdxs.length > 0 ? _f.parentIdxs.join("-") : "";
+    let strParentIdx =
+      _f.parentIdxs.length > 0 ? _f.parentIdxs.join("-") : "Top";
     let fileName = "file" + strParentIdx + "-" + idx;
     let commentName = "comment" + strParentIdx + "-" + idx;
 
     let childrenFileList = null;
     //入れ子要素がある場合はfileListを内部に作成
     if (_f.children.length > 0) {
-      let _p = _f.parentIdxs;
+      let _p = Object.assign([], _f.parentIdxs);
       _p.push(idx);
       childrenFileList = (
         <FileList
