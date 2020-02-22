@@ -78,8 +78,8 @@ export default class Main extends Component {
       target = target["children"];
       _parentIdxs.push(idx);
     }
-    let tmp = Object.assign({}, this.defaultFile);
-    target.push(Object.assign({}, { ...tmp, ...{ parentIdxs: _parentIdxs } }));
+    let tmp = JSON.parse(JSON.stringify(this.defaultFile));
+    target.push(JSON.parse(JSON.stringify({ ...tmp, ...{ parentIdxs: _parentIdxs } })));
     this.setState({
       files: this.state.files
     });

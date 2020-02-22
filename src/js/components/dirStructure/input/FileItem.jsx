@@ -16,7 +16,7 @@ export default class FileItem extends Component {
     let childrenFileList = null;
     //入れ子要素がある場合はfileListを内部に作成
     if (_f.children.length > 0) {
-      let _p = Object.assign([], _f.parentIdxs);
+      let _p = JSON.parse(JSON.stringify(_f.parentIdxs));
       _p.push(idx);
       childrenFileList = (
         <FileList
