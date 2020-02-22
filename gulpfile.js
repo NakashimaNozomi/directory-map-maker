@@ -27,7 +27,7 @@ gulp.task('browser-sync', (done) => {
   browserSync.init({
     //ローカル開発
     server: {
-    baseDir: "./"+process.env.DEVELOP_DIR+"/",
+      baseDir: "./" + process.env.DEVELOP_DIR + "/",
     },
     files: ['./**/*.html', './img/**/*'],
   });
@@ -43,7 +43,9 @@ gulp.task('sass', (done) => {
     // Sassの@importにおけるglobを有効にする
     .pipe(sassGlob())
     // 整形
-    .pipe(sass({outputStyle : isDevelop ? 'expanded': 'compressed'}))
+    .pipe(sass({
+      outputStyle: isDevelop ? 'expanded' : 'compressed'
+    }))
     // vendor prefixの付与
     .pipe(autoprefixer(configSass.autoprefixer))
     .pipe(gulp.dest(configSass[destination]))
@@ -73,22 +75,21 @@ gulp.task('html', (done) => {
 
 gulp.task("jsx", (done) => {
   plumber({
-    errorHandler: notify.onError('<%= error.message %>')
-  })
-  .pipe(webpackStream({
-    mode: environment,
-    entry: [
-      './src/js/index.jsx',
-    ],
-    output: {
-      path: isDevelop ? __dirname+'/'+process.env.DEVELOP_DIR : __dirname+'/'+process.env.PRODUCT_DIR,
-      filename: "[name].js",
-    },
-    module: {
-      rules: [{
-        exclude: /node_modules/,
-        use: [
-          {
+      errorHandler: notify.onError('<%= error.message %>')
+    })
+    .pipe(webpackStream({
+      mode: environment,
+      entry: {
+        main: './src/js/index.jsx',
+      },
+      output: {
+        path: isDevelop ? __dirname + '/' + process.env.DEVELOP_DIR : __dirname + '/' + process.env.PRODUCT_DIR,
+        filename: "[name].js",
+      },
+      module: {
+        rules: [{
+          exclude: /node_modules/,
+          use: [{
             loader: 'babel-loader',
             options: {
               presets: [
@@ -101,21 +102,20 @@ gulp.task("jsx", (done) => {
                     corejs: 3
                   }
                 ],
-              ],//presets
+              ], //presets
               sourceType: 'unambiguous',
-            }//options
-          }
-        ],
-        resolve: {
-          extensions: ['.js', '.jsx']
-        },
-      }],
-    },
-  }, webpack))
-  .pipe(gulp.dest(configJsx[destination]))
-  .pipe(browserSync.reload({
-    stream: true
-  }));
+            } //options
+          }],
+          resolve: {
+            extensions: ['.js', '.jsx']
+          },
+        }],
+      },
+    }, webpack))
+    .pipe(gulp.dest(configJsx[destination]))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
 
   done();
 });
@@ -154,17 +154,17 @@ gulp.task('icon', (done) => {
       '!./node_modules/material-design-icons-iconfont/dist/LICENSE',
       '!./node_modules/material-design-icons-iconfont/dist/*.map'
     ])
-    .pipe(gulp.dest(configSass[destination]+'/material-icons/'));
+    .pipe(gulp.dest(configSass[destination] + '/material-icons/'));
 
-    //fontawasome
-    gulp.src([
+  //fontawasome
+  gulp.src([
       './node_modules/@fortawesome/fontawesome-free/css/all.min.css',
     ])
-    .pipe(gulp.dest(configSass[destination]+'/fontawesome/css/'));
-    gulp.src([
+    .pipe(gulp.dest(configSass[destination] + '/fontawesome/css/'));
+  gulp.src([
       './node_modules/@fortawesome/fontawesome-free/webfonts/*',
     ])
-    .pipe(gulp.dest(configSass[destination]+'/fontawesome/webfonts/'));
+    .pipe(gulp.dest(configSass[destination] + '/fontawesome/webfonts/'));
 
   done();
 });
@@ -180,10 +180,10 @@ gulp.task('watch', (done) => {
   done();
 });
 
-gulp.task('default', gulp.series(gulp.parallel('sass','html','jsx', 'static'),'browser-sync','watch') );
+gulp.task('default', gulp.series(gulp.parallel('sass', 'html', 'jsx', 'static'), 'browser-sync', 'watch'));
 
 //開発用の出力
-gulp.task("dev", gulp.parallel('sass','html','jsx', 'static'));
+gulp.task("dev", gulp.parallel('sass', 'html', 'jsx', 'static'));
 
 //以下はデプロイ用タスク
 gulp.task("product",
@@ -196,12 +196,12 @@ gulp.task("product",
 
       done();
     },
-    gulp.parallel('sass','html','jsx', 'static')
+    gulp.parallel('sass', 'html', 'jsx', 'static')
   )
 );
 
 gulp.task('ghpages', (done) => {
-  gulp.src('./'+process.env.PRODUCT_DIR+'/**/*')
+  gulp.src('./' + process.env.PRODUCT_DIR + '/**/*')
     .pipe(ghPages());
   done();
 });
