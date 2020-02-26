@@ -20,10 +20,15 @@
 `.env`の`PRODUCT_DIR`に出力される
 
 - ファイルの出力 `npx gulp product`
-- github pages へデプロイ `npx gulp deploy`
+- github pages へデプロイ `npx gulp ghpages`
 
---
+上記をまとめたコマンド `npx gulp deploy` でOK
+
 
 ## 著作権表示とライセンス
 
 Code Copyright 2020 Nozomi Nakamura. Code released under the [MIT license](/LICENSE) .
+
+
+## 気に入ったら....?
+:beer: 私の燃料を[ここから](https://www.paypal.me/nakamuranozomi/500yen?locale.x=ja_JP)奢ってください :beer:
