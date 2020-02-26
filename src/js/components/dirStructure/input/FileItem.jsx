@@ -1,13 +1,10 @@
-import React, { Component } from "react";
+import util from "../../../utils"
+import React from "react";
 import FileList from "./FileList";
 
-export default class FileItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default function FileItem(props) {
   //通常のファイルlist
-  makeNormalListDom = (_f, idx, parents) => {
+  const makeNormalListDom = (_f, idx, parents) => {
     let strParentIdx =
       _f.parentIdxs.length > 0 ? _f.parentIdxs.join("-") : "Top";
     let fileName = "file" + strParentIdx + "-" + idx;
@@ -16,15 +13,15 @@ export default class FileItem extends Component {
     let childrenFileList = null;
     //入れ子要素がある場合はfileListを内部に作成
     if (_f.children.length > 0) {
-      let _p = JSON.parse(JSON.stringify(_f.parentIdxs));
+      let _p = util.copyObject(_f.parentIdxs);
       _p.push(idx);
       childrenFileList = (
         <FileList
           files={_f.children}
           parents={_p}
-          onTextChangeHandler={this.props.onTextChangeHandler}
-          onAddBtnClickHandler={this.props.onAddBtnClickHandler}
-          onDelBtnClickHandler={this.props.onDelBtnClickHandler}
+          onTextChangeHandler={props.onTextChangeHandler}
+          onAddBtnClickHandler={props.onAddBtnClickHandler}
+          onDelBtnClickHandler={props.onDelBtnClickHandler}
         />
       );
     }
@@ -36,7 +33,7 @@ export default class FileItem extends Component {
         <button
           className="btn-flat col s12 indigo-text"
           tabIndex="-1"
-          onClick={e => this.props.onAddBtnClickHandler(idx, parents)}
+          onClick={e => props.onAddBtnClickHandler(idx, parents)}
         >
           <i className="material-icons">add_circle</i>
         </button>
@@ -61,7 +58,7 @@ export default class FileItem extends Component {
               className="validate"
               defaultValue={_f.name}
               onChange={e =>
-                this.props.onTextChangeHandler(
+                props.onTextChangeHandler(
                   "name",
                   e.target.value,
                   idx,
@@ -84,7 +81,7 @@ export default class FileItem extends Component {
               type="text"
               defaultValue={_f.comment}
               onChange={e =>
-                this.props.onTextChangeHandler(
+                props.onTextChangeHandler(
                   "comment",
                   e.target.value,
                   idx,
@@ -99,7 +96,7 @@ export default class FileItem extends Component {
               <button
                 className="btn-flat col s12 red-text"
                 tabIndex="-1"
-                onClick={() => this.props.onDelBtnClickHandler(idx, parents)}
+                onClick={() => props.onDelBtnClickHandler(idx, parents)}
               >
                 <i className="material-icons">delete</i>
               </button>
@@ -112,11 +109,9 @@ export default class FileItem extends Component {
     );
   };
 
-  render() {
-    let _f = this.props.file;
-    let idx = this.props.idx;
-    let parents = this.props.parents || [];
+  let _f = props.file;
+  let idx = props.idx;
+  let parents = props.parents || [];
 
-    return this.makeNormalListDom(_f, idx, parents);
-  }
+  return makeNormalListDom(_f, idx, parents);
 }

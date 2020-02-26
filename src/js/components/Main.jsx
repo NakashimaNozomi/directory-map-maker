@@ -1,46 +1,39 @@
-import React, { Component } from "react";
+import util from "../utils"
+import React, { useState } from "react";
 
 import Input from "./dirStructure/Input.jsx";
 import Output from "./dirStructure/Output.jsx";
 
-export default class Main extends Component {
-  constructor(props) {
-    super(props);
+export default function Main(props) {
+  const defaultFile= {
+    name: "",
+    comment: "",
+    isDir: false,
+    parentIdxs: [],
+    children: []
+  };
 
-    this.defaultFile = {
-      name: "",
-      comment: "",
-      isDir: false,
-      parentIdxs: [],
-      children: []
-    };
+  const [isOutputShow, updateIsOutputShow] = useState(true);
+  const [files, updateFiles] = useState([
+      {
+        name: "",
+        comment: "",
+        isDir: false,
+        parentIdxs: [],
+        children: []
+      }
+  ]);
 
-    this.state = {
-      isOutputShow: true,
-      files: [
-        {
-          name: "",
-          comment: "",
-          isDir: false,
-          parentIdxs: [],
-          children: []
-        }
-      ]
-    };
-
-    $(() => {
-      $(".tooltipped").tooltip();
-      $(".tabs").tabs();
-    });
-  }
+  $(() => {
+    $(".tooltipped").tooltip();
+    $(".tabs").tabs();
+  });
 
   /**
    * 出力エリアの表示非表示を切り替える
    */
-  toggleOutputDisp = () => {
-    this.setState({
-      isOutputShow: !this.state.isOutputShow
-    });
+  const toggleOutputDisp = () => {
+    updateIsOutputShow(!isOutputShow);
     setTimeout(() => {
       $(".tabs").tabs("updateTabIndicator");
     }, 10);
@@ -54,14 +47,8 @@ export default class Main extends Component {
    * @param integer idx 変更する対象のidx
    * @param array parentIdxs 親要素のidxの配列
    */
-  onTextChangeHandler = (key, value, idx, parentIdxs) => {
-    // 対象の階層まで潜る
-    let target = this._getTargetFileObj(idx, parentIdxs);
-    // 潜り終えた際に値を書き換える
-    this._updateFileObjVal(target, key, value);
-    this.setState({
-      files: this.state.files
-    });
+  const onTextChangeHandler = (key, value, idx, parentIdxs) => {
+    _updateFileObjVal(key, value, idx, parentIdxs);
   };
 
   /**
@@ -70,19 +57,19 @@ export default class Main extends Component {
    * @param integer idx
    * @param array parentIdxs 親要素のidxの配列
    */
-  onAddBtnClickHandler = (idx, parentIdxs) => {
-    let target = this._getTargetFileObj(idx, parentIdxs);
-    let _parentIdxs = [];
+  const onAddBtnClickHandler = (idx, parentIdxs) => {
+    let _files = util.copyObject(files);
+    let target = _getTargetFileObj(_files, idx, parentIdxs);
+    let _parentIdxs = target.parentIdxs ? util.copyObject(target.parentIdxs) : [];
+    console.log(_parentIdxs);
     if (idx != -1 || parentIdxs.length > 0) {
       //トップの階層じゃない場合はchildrenに新しいファイルObjを挿入
       target = target["children"];
       _parentIdxs.push(idx);
     }
-    let tmp = JSON.parse(JSON.stringify(this.defaultFile));
-    target.push(JSON.parse(JSON.stringify({ ...tmp, ...{ parentIdxs: _parentIdxs } })));
-    this.setState({
-      files: this.state.files
-    });
+    let tmp = util.copyObject(defaultFile);
+    target.push(Object.assign({}, { ...tmp, ...{ parentIdxs: _parentIdxs } }));
+    updateFiles(_files);
   };
 
   /**
@@ -91,7 +78,7 @@ export default class Main extends Component {
    * @param integer idx
    * @param array parentIdxs 親要素のidxの配列
    */
-  onDelBtnClickHandler = (idx, parentIdxs) => {};
+  const onDelBtnClickHandler = (idx, parentIdxs) => {};
 
   /**
    * filesObjectの対象の要素まで潜る
@@ -99,8 +86,7 @@ export default class Main extends Component {
    * @param integer idx
    * @param array parentIdxs 親要素のidxの配列
    */
-  _getTargetFileObj = (idx, parentIdxs) => {
-    let _f = this.state.files;
+  const _getTargetFileObj = (_f, idx, parentIdxs) => {
     let target = _f;
 
     for (let i = 0; i < parentIdxs.length; ++i) {
@@ -126,11 +112,16 @@ export default class Main extends Component {
    * fileObjの値をアップデートする。
    * keyがnameの場合はisDirも合わせて更新する
    *
-   * @param Object target
    * @param string key
    * @param Object value
    */
-  _updateFileObjVal = (target, key, value) => {
+  const _updateFileObjVal = (key, value, idx, parentIdxs) => {
+    let _files = util.copyObject(files);
+    // 対象の階層まで潜る
+    let target = _getTargetFileObj(_files, idx, parentIdxs);
+
+    console.log(target);
+    // 潜り終えた際に値を書き換える
     target[key] = name;
     //keyが[ファイル名]でスラッシュを含む場合はisDirをtrueに
     if (key == "name") {
@@ -140,34 +131,34 @@ export default class Main extends Component {
         target["isDir"] = false;
       }
     }
+
+    updateFiles(_files);
   };
 
-  render() {
-    return (
-      <main className="main-content">
-        <div className="row main-content-row">
-          <Input
-            isOutputShow={this.state.isOutputShow}
-            files={this.state.files}
-            onTextChangeHandler={this.onTextChangeHandler}
-            onAddBtnClickHandler={this.onAddBtnClickHandler}
-            onDelBtnClickHandler={this.onDelBtnClickHandler}
-          />
-          <Output isShow={this.state.isOutputShow} />
-        </div>
-        <a
-          className="btn-floating btn-large waves-effect waves-light teal output-toggle-btn tooltipped"
-          data-position="top"
-          data-tooltip={this.state.isOutputShow ? "出力を非表示" : "出力を表示"}
-          onClick={this.toggleOutputDisp}
-        >
-          <i
-            className={
-              this.state.isOutputShow ? "fas fa-eye-slash" : "fas fa-eye"
-            }
-          ></i>
-        </a>
-      </main>
-    );
-  }
+  return (
+    <main className="main-content">
+      <div className="row main-content-row">
+        <Input
+          isOutputShow={isOutputShow}
+          files={files}
+          onTextChangeHandler={onTextChangeHandler}
+          onAddBtnClickHandler={onAddBtnClickHandler}
+          onDelBtnClickHandler={onDelBtnClickHandler}
+        />
+        <Output isShow={isOutputShow} />
+      </div>
+      <a
+        className="btn-floating btn-large waves-effect waves-light teal output-toggle-btn tooltipped"
+        data-position="top"
+        data-tooltip={isOutputShow ? "出力を非表示" : "出力を表示"}
+        onClick={toggleOutputDisp}
+      >
+        <i
+          className={
+            isOutputShow ? "fas fa-eye-slash" : "fas fa-eye"
+          }
+        ></i>
+      </a>
+    </main>
+  );
 }
